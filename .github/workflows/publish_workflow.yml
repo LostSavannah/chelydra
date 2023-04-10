@@ -1,8 +1,6 @@
-name: Build
+name: Publish
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -19,3 +17,4 @@ jobs:
           dir dist/*.whl | xargs -I {} pip install {}
           pytest
           deactivate
+          twine upload -u __token__ -p ${{ secrets.PYPI_UPLOAD_CHELYDRA_TWINE_TOKEN }} dist/*
