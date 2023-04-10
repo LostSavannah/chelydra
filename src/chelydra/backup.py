@@ -21,7 +21,7 @@ import os
 import json
 import time
 from typing import Dict, List
-from .tools.directory import get_files
+from .tools.directory import delete_file, get_files
 from .tools.cryptography import get_file_hash, get_list_hash
 from .tools.compression import extract_to_folder, update, update_bytes
 from .version import VERSION_MODE_FULL, VERSION_MODE_PART, Version, VersionId
@@ -145,13 +145,26 @@ def restore_into(backup:str, target:str, till_epoch:float = None):
     elif os.path.isfile(target):
         raise Exception(f"Can't restore into file: {target}")
     files:Dict[str, Version] = {}
+    deletions:List[str] = []
     for version in get_restore_order(backup, till_epoch):
         for file in version.changes:
             files[file] = version
+            if file in deletions:
+                deletions.remove(file)
         for deletion in version.deletions:
             del files[deletion]
+            if deletion not in deletions:
+                deletions.append(deletion)
     for entry in files:
         compressed_file_name = files[entry].get_filename('.zip')
         fullname = os.sep.join([backup, compressed_file_name])
         extract_to_folder(fullname, entry, target)
-    
+    for deletion in deletions:
+        delete_file(target, deletion)
+
+def syncronize(folders:List[str], source:str, backup:str):
+    if create_version(source, backup):
+        for target in folders:
+            if target == source:
+                continue
+            restore_into(backup, target)

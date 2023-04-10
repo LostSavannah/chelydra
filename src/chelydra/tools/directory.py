@@ -42,4 +42,6 @@ def get_files(path, ignore:List[str] = None):
             yield directory
 
 def delete_file(path:str, filename:str):
-    os.remove(os.sep.join([path, filename]))
+    full:str = os.sep.join([path, filename])
+    if os.path.exists(full) and os.path.isfile(full):
+        os.remove(full)
