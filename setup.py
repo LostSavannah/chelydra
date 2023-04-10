@@ -10,7 +10,7 @@ setuptools.setup(
     author="Erick Fernando Mora Ramirez",
     author_email="erickfernandomoraramirez@gmail.com",
     description="A zip based backup-restore tool",
-    long_description=readfile('README.MD'),
+    long_description=readfile('README.md'),
     long_description_content_type="text/markdown",
     url="https://github.com/LostSavannah/chelydra",
     project_urls={
