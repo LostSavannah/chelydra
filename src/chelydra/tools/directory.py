@@ -22,3 +22,6 @@ def get_files(path, ignore:List[str] = None):
     for directory in get_directories(path, ignore):
         if os.path.isfile(directory):
             yield directory
+
+def delete_file(path:str, filename:str):
+    os.remove(os.sep.join([path, filename]))
