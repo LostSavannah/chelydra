@@ -1,0 +1,22 @@
+name: Publish
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-01
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          python3 -m build
+
+      - run: |
+          python3 -m venv chelydra_testenv
+          source chelydra_testenv/bin/activate
+          dir dist/*.whl | xargs -I {} pip install {}
+          pytest
+          deactivate
+          twine upload -u __token__ -p ${{ secrets.PYPI_UPLOAD_CHELYDRA_TWINE_TOKEN }} dist/*
