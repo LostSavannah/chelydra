@@ -16,6 +16,7 @@
 ##
 ##    mailto:erickfernandomoraramirez@gmail.com
 
+from dataclasses import replace
 from zipfile import ZipFile
 
 def update(compressed_file_name:str, entry_name:str, absolute_filename:str):
@@ -33,4 +34,5 @@ def get_entries(compressed_file_name:str):
         yield zipinfo.filename
 
 def extract_to_folder(compressed_file_name:str, entry_name:str, folder_name:str):
+    entry_name = entry_name.replace('\\', '/')
     ZipFile(compressed_file_name, 'r').extract(entry_name, folder_name)

@@ -21,7 +21,7 @@ import os
 import json
 import time
 from typing import Dict, List
-from .tools.directory import delete_file, get_files
+from .tools.directory import delete_file, empty_directory, get_files
 from .tools.cryptography import get_file_hash, get_list_hash
 from .tools.compression import extract_to_folder, update, update_bytes
 from .version import VERSION_MODE_FULL, VERSION_MODE_PART, Version, VersionId
@@ -139,7 +139,7 @@ def compile_version(version:Version, source:str, backup:str):
     current_manifest['versions'].append(version.get_dict())
     save_manifest(backup, current_manifest)
 
-def restore_into(backup:str, target:str, till_epoch:float = None):
+def restore_into(backup:str, target:str, till_epoch:float = None, empty_target:bool = False):
     if not os.path.exists(target):
         os.makedirs(target)
     elif os.path.isfile(target):
@@ -155,6 +155,8 @@ def restore_into(backup:str, target:str, till_epoch:float = None):
             del files[deletion]
             if deletion not in deletions:
                 deletions.append(deletion)
+    if empty_target:
+        empty_directory(target)
     for entry in files:
         compressed_file_name = files[entry].get_filename('.zip')
         fullname = os.sep.join([backup, compressed_file_name])
@@ -167,4 +169,4 @@ def syncronize(folders:List[str], source:str, backup:str):
         for target in folders:
             if target == source:
                 continue
-            restore_into(backup, target)
+            restore_into(backup, target, empty_target=True)

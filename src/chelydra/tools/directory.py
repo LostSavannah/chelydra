@@ -45,3 +45,12 @@ def delete_file(path:str, filename:str):
     full:str = os.sep.join([path, filename])
     if os.path.exists(full) and os.path.isfile(full):
         os.remove(full)
+
+def empty_directory(path:str):
+    for f in os.listdir(path):
+        fullpath = os.sep.join([path, f])
+        if os.path.isdir(fullpath):
+            empty_directory(fullpath)
+            os.removedirs(fullpath)
+        elif os.path.isfile(fullpath):
+            os.remove(fullpath)
