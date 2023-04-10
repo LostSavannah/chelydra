@@ -16,7 +16,7 @@
 ##
 ##    mailto:erickfernandomoraramirez@gmail.com
 
-from genericpath import isfile
+import tempfile
 import os
 import json
 import time
