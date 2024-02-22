@@ -16,11 +16,10 @@
 ##
 ##    mailto:erickfernandomoraramirez@gmail.com
 
-import tempfile
 import os
 import json
 import time
-from typing import Dict, List
+from typing import Dict, List, Iterator
 from .tools.directory import delete_file, empty_directory, get_files
 from .tools.cryptography import get_file_hash, get_list_hash
 from .tools.compression import extract_to_folder, update, update_bytes
@@ -62,7 +61,7 @@ def get_manifest(path:str):
     with open(get_manifest_name(path), 'r') as fi:
         return json.load(fi)
 
-def get_restore_order(path:str, epoch:float = None) -> List[Version]:
+def get_restore_order(path:str, epoch:float = None) -> Iterator[Version]:
     """
     Retrieves the collection which represents the restore order based in 
     a moment in time from a certain version until that specified moment.
