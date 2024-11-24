@@ -22,7 +22,7 @@ jobs:
         run: echo "$(cat version.txt).rc-$(date +%s)" > version.txt
 
       - name: Publish
-        run: | 
+        run: |
           python3 -m venv chelydra_buildenv
           source chelydra_buildenv/bin/activate
           pip install twine pytest build
