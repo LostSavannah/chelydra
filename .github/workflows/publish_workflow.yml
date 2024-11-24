@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Update version
+        run: echo "$(cat version.txt).${{ github.run_attempt }}" > version.txt
+
       - name: Publish
         run: |
           python3 -m venv chelydra_buildenv
