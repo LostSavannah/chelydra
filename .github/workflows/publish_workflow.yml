@@ -25,7 +25,8 @@ jobs:
         run: |
           python3 -m venv chelydra_buildenv
           source chelydra_buildenv/bin/activate
-          pip install twine pytest
+          pip install twine pytest build
+          python3 -m build
           dir dist/*.whl | xargs -I {} pip install {}
           pytest
           twine upload -u __token__ -p ${{ secrets.PYPI_UPLOAD_CHELYDRA_TWINE_TOKEN }} dist/*
