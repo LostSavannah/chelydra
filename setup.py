@@ -14,9 +14,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/LostSavannah/chelydra",
     project_urls={
-        "Bug Tracker": "https://dev.moradev.dev/chelydra/issues",
-        "Documentation": "https://dev.moradev.dev/chelydra/documentation",
-        "Examples": "https://dev.moradev.dev/chelydra/examples",
+        "Bug Tracker": "https://github.com/LostSavannah/chelydra/issues",
+        "Documentation": "https://github.com/LostSavannah/chelydra/wiki",
+        "Examples": "https://github.com/LostSavannah/chelydra/wiki/Examples",
     },
     package_data={
         "":["*.txt"]
