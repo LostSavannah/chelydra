@@ -19,12 +19,17 @@ jobs:
 
       - name: Build
         run: |
+          python3 -m venv chelydra_buildenv
+          source chelydra_testenv/bin/activate
+          pip3 install build
           python3 -m build
+          deactivate
 
       - name: Test
         run: |
           python3 -m venv chelydra_testenv
           source chelydra_testenv/bin/activate
+          pip3 install pytest
           dir dist/*.whl | xargs -I {} pip install {}
           pytest
           deactivate

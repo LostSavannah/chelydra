@@ -20,9 +20,9 @@ jobs:
 
       - name: Publish
         run: |
-          python3 -m venv chelydra_testenv
+          python3 -m venv chelydra_buildenv
           source chelydra_testenv/bin/activate
-          pip install twine
+          pip install twine pytest
           dir dist/*.whl | xargs -I {} pip install {}
           pytest
           twine upload -u __token__ -p ${{ secrets.PYPI_UPLOAD_CHELYDRA_TWINE_TOKEN }} dist/*
