@@ -97,14 +97,15 @@ def create_version(source:str, backup:str, full:bool = False) -> bool:
     """
     Creates a version. If full is true, it will create a full version and 
     return true. Otherwise it will try to create a partial version depending on
-    if there were any changes.  
+    if there were any changes. If no previows version it will create a full version.
     """
     current_status = get_status_from_path(source)
     current_manifest = get_manifest(backup)
     deletions = []
-    mode = VERSION_MODE_FULL if full else VERSION_MODE_PART
-    order = len(current_manifest['versions']) + 1
-    if not full:
+    versions = current_manifest['versions']
+    mode = VERSION_MODE_FULL if full or len(versions) == 0 else VERSION_MODE_PART
+    order = len(versions) + 1
+    if mode == VERSION_MODE_PART:
         changes = {}
         backup_status = get_status_from_backup(backup)
         deletions = [f for f in backup_status if f not in current_status]
