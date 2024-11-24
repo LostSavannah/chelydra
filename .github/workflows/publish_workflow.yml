@@ -21,7 +21,7 @@ jobs:
       - name: Publish
         run: |
           python3 -m venv chelydra_buildenv
-          source chelydra_testenv/bin/activate
+          source chelydra_buildenv/bin/activate
           pip install twine pytest
           dir dist/*.whl | xargs -I {} pip install {}
           pytest

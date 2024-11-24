@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: |
           python3 -m venv chelydra_buildenv
-          source chelydra_testenv/bin/activate
+          source chelydra_buildenv/bin/activate
           pip3 install build
           python3 -m build
           deactivate
