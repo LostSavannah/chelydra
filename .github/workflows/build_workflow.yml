@@ -1,4 +1,4 @@
-name: Build
+name: Test Build
 
 on:
   push:
@@ -6,13 +6,23 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-01
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: |
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Build
+        run: |
           python3 -m build
 
-      - run: |
+      - name: Test
+        run: |
           python3 -m venv chelydra_testenv
           source chelydra_testenv/bin/activate
           dir dist/*.whl | xargs -I {} pip install {}
