@@ -1,6 +1,8 @@
-name: Publish
+name: Publish rc
 
 on:
+  push: 
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -15,6 +17,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+
+      - name: Update version
+        run: echo "$(cat version.txt).rc-$(date +%s)" > version.txt
 
       - name: Publish
         run: |
